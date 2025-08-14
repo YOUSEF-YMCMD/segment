@@ -1,24 +1,23 @@
 import streamlit as st
-import joblib
 import numpy as np
+import joblib
 
-# Load the trained model
-model = joblib.load("Kmeans_model.pkl")
+# Load the model
+kmeans = joblib.load("kmeans_model.pkl")
+st.title("Customer Segmentation (KMeans)")
 
-# App title
-st.title("Prediction App")
-st.write("Enter the input features to get a prediction:")
+st.write("Enter the following values to find your cluster:")
 
-# Input fields
-feature1 = st.number_input("Feature 1", value=0.0)
-feature2 = st.number_input("Feature 2", value=0.0)
-feature3 = st.number_input("Feature 3", value=0.0)
-feature4 = st.number_input("Feature 4", value=0.0)
-feature5 = st.number_input("Feature 5", value=0.0)
-feature6 = st.number_input("Feature 6", value=0.0)
+# User inputs
+fresh = st.number_input("Fresh", min_value=0, step=1)
+milk = st.number_input("Milk", min_value=0, step=1)
+grocery = st.number_input("Grocery", min_value=0, step=1)
+frozen = st.number_input("Frozen", min_value=0, step=1)
+detergents_paper = st.number_input("Detergents_Paper", min_value=0, step=1)
+delicassen = st.number_input("Delicassen", min_value=0, step=1)
 
-# Predict button
-if st.button("Predict"):
-    features = np.array([[feature1, feature2, feature3 , feature4 , feature5 , feature6]])
-    prediction = model.predict(features)
-    st.success(f"Prediction: {prediction[0]}")
+if st.button("Predict Cluster"):
+    # Prepare data for prediction
+    input_data = np.array([[fresh, milk, grocery, frozen, detergents_paper, delicassen]])
+    cluster = kmeans.predict(input_data)[0]
+    st.success(f"You belong to cluster number: {cluster}")
