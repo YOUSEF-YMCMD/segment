@@ -3,7 +3,8 @@ import numpy as np
 import joblib
 
 # Load the model
-kmeans = joblib.load("kmeans_model.pkl")
+kmeans = joblib.load(r"kmeans_model.pkl")
+
 st.title("Customer Segmentation (KMeans)")
 
 st.write("Enter the following values to find your cluster:")
